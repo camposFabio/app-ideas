@@ -40,9 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
       int _power = 0;
       for (int i = 0; i < txtBinary.length; i++) {
         int _pos = txtBinary.length - i - 1;
-         _decimal += int.parse(txtBinary[_pos])*pow(2, i);           
+        _decimal += int.parse(txtBinary[_pos]) * pow(2, i);
       }
-
     });
   }
 
@@ -55,10 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: SafeArea(
-        child: Center(        
+        child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(         
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
@@ -66,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 TextFormField(
                   textAlign: TextAlign.right,
-                  inputFormatters: [WhitelistingTextInputFormatter(RegExp("[01]"))],
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter(RegExp("[01]"))
+                  ],
                   onChanged: (text) => _binaryToDecimal(text),
                 ),
                 Text(
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-       // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
