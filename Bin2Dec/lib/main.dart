@@ -34,15 +34,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _decimal = 0;
 
+  final textController = TextEditingController();
+
   void _binaryToDecimal(String txtBinary) {
     setState(() {
       _decimal = 0;
-      int _power = 0;
       for (int i = 0; i < txtBinary.length; i++) {
         int _pos = txtBinary.length - i - 1;
         _decimal += int.parse(txtBinary[_pos]) * pow(2, i);
       }
     });
+  }
+
+  void _clearAll() {
+    textController.clear();
+    _binaryToDecimal("0");
   }
 
   @override
@@ -52,6 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _clearAll,
+            tooltip: "Refresh",
+          ),
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -62,14 +76,24 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Text(
                   'Enter the binary value:',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.blue,
+                  ),
                 ),
+                Divider(),
                 TextFormField(
                   textAlign: TextAlign.right,
                   inputFormatters: [
                     WhitelistingTextInputFormatter(RegExp("[01]"))
                   ],
                   onChanged: (text) => _binaryToDecimal(text),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Binary value"),
+                  controller: textController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: false),
                 ),
+                Divider(),
                 Text(
                   'Decimal value: $_decimal',
                   style: Theme.of(context).textTheme.headline4,
